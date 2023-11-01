@@ -2,9 +2,9 @@ import React from 'react'
 
 function LeftNavbar() {
   return (
-    <section className='w-[20vw] h-[100vh] bg-black text-white p-5'>
+    <div className='h-[100vh] w-[inherit] fixed bg-black text-white p-5'>
         LeftNavbar
-    </section>
+    </div>
   )
 }
 

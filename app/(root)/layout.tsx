@@ -18,9 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex">
-          <LeftNavbar />
-          {children}
+        <main className="flex gap-2">
+          <div className="w-[20vw] relative">
+            <LeftNavbar />
+          </div>
+          <div className="relative">
+            {children}
+          </div>
         </main>
       </body>
     </html>

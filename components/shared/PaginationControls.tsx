@@ -1,50 +1,59 @@
-'use client'
+"use client";
 
-import { FC } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { FC } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationControlsProps {
-  hasNextPage: boolean
-  hasPrevPage: boolean
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  totalPages: number;
 }
 
-const PaginationControls: FC<PaginationControlsProps> = (
-  {
-    hasNextPage,
-    hasPrevPage,
-  }
-) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+const PaginationControls: FC<PaginationControlsProps> = ({
+  hasNextPage,
+  hasPrevPage,
+  totalPages,
+}) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const page = searchParams.get('page') ?? '1'
-  const per_page = searchParams.get('per_page') ?? '10'
+  const page = searchParams.get("page") ?? "1";
+  const per_page = searchParams.get("per_page") ?? "10";
+  // const totalPages = Math.ceil(totalData / Number(per_page))
+  const pagesToDisplay: number[] = [];
+  const pagesLen = totalPages / 5;
+  for (let i = 1; i <= pagesLen; i++) {
+    let multiples = 5 * i;
+    pagesToDisplay.push(multiples);
+  }
 
   return (
-    <div className='flex gap-2'>
+    <div className="flex h-7">
       <button
-        className='bg-blue-500 text-white p-1'
+        className="border-2 border-black rounded-l-sm px-2 disabled:bg-gray-900 disabled:text-white"
         disabled={!hasPrevPage}
         onClick={() => {
-          router.push(`/?page=${Number(page) - 1}&per_page=${per_page}`)
-        }}>
-        prev page
+          router.push(`/?page=${Number(page) - 1}&per_page=${per_page}`);
+        }}
+      >
+        &lt;
       </button>
-
-      <div>
-        {page} / {Math.ceil(10 / Number(per_page))}
+      <div className="border-y-2 border-black px-2">
+        {page} / {totalPages}
       </div>
 
       <button
-        className='bg-blue-500 text-white p-1'
+        className="border-2 border-black rounded-r-sm px-2 disabled:bg-gray-900 disabled:text-white"
         disabled={!hasNextPage}
         onClick={() => {
-          router.push(`/?page=${Number(page) + 1}&per_page=${per_page}`)
-        }}>
-        next page
+          router.push(`/?page=${Number(page) + 1}&per_page=${per_page}`);
+        }}
+      >
+        &gt;
       </button>
+      
     </div>
-  )
-}
+  );
+};
 
-export default PaginationControls
+export default PaginationControls;
